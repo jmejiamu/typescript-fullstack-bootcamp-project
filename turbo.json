@@ -16,6 +16,9 @@
     "db:seed": {
       "cache": false
     },
+    "db:cleanup": {
+      "cache": false
+    },
     "build": {
       "dependsOn": ["^build", "^db:generate"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
@@ -25,6 +28,12 @@
       "dependsOn": ["^lint"]
     },
     "test": {},
+    "e2e:run": {
+      "cache": false
+    },
+    "e2e:report": {
+      "cache": false
+    },
     "dev": {
       "dependsOn": ["^db:generate"],
       "cache": false,

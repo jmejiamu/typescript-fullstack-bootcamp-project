@@ -18,6 +18,7 @@ export const CollectionFilter = (props: CollectionFilterProps) => {
       </label>
       <select
         id="collection"
+        name="collection"
         value={selectedCollection}
         onChange={(e) => setSelectedCollection(e.target.value)}
         className="mt-1 block w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"

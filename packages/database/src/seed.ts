@@ -3,8 +3,9 @@ import { faker } from '@faker-js/faker'
 
 const prisma = new PrismaClient()
 
-async function main() {
+export async function seed() {
   // Create Collections related to shoes
+  console.log('Seeding database...')
   const collections: Collection[] = []
   const collectionNames = ['Sneakers', 'Formal Shoes', 'Sandals']
   for (let i = 0; i < collectionNames.length; i++) {
@@ -19,7 +20,7 @@ async function main() {
 
   // Create Shoe Products with Variants
   for (let i = 0; i < 5; i++) {
-    const product = await prisma.product.create({
+    await prisma.product.create({
       data: {
         name: faker.helpers.arrayElement([
           'Air Max 270',
@@ -51,26 +52,33 @@ async function main() {
         },
       },
     })
-
-    // Optionally, connect the product to another shoe-related collection
-    if (faker.datatype.boolean()) {
-      await prisma.product.update({
-        where: { id: product.id },
-        data: {
-          collections: {
-            connect: [
-              { id: collections[faker.datatype.number({ min: 0, max: 2 })].id },
-            ],
-          },
-        },
-      })
-    }
   }
+  // TODO: This is used for testing purposes only - commented after testing
+  // await prisma.product.create({
+  //   data: {
+  //     name: 'Summer Sandals',
+  //     description:
+  //       'Lightweight and comfortable summer sandals for casual wear.',
+  //     image: faker.image.imageUrl(640, 480, 'sandals', true), // Image related to sandals
+  //     price: parseFloat(faker.commerce.price(20, 100)),
+  //     variants: {
+  //       create: Array.from({ length: 3 }, () => ({
+  //         size: faker.helpers.arrayElement(['6', '7', '8', '9', '10']),
+  //         color: faker.helpers.arrayElement(['Tan', 'White', 'Black']),
+  //         stock: faker.datatype.number({ min: 10, max: 50 }),
+  //         sku: faker.datatype.uuid(),
+  //       })),
+  //     },
+  //     collections: {
+  //       connect: [{ id: collections[2].id }], // Connect specifically to the Sandals collection
+  //     },
+  //   },
+  // })
 
   console.log('Shoe-related seed data created successfully!')
 }
 
-main()
+seed()
   .catch((e) => {
     console.error(e)
   })

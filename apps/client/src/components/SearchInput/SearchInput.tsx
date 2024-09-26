@@ -7,6 +7,7 @@ export const SearchInput = (props: SearchInputProps) => {
   const { handleSearch, searchProduct } = props
   return (
     <input
+      name="search"
       type="text"
       placeholder="Search for products..."
       value={searchProduct}
